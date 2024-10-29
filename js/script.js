@@ -40,31 +40,49 @@ const teamMembers = [
 // # Funzioni
 
 // variabile testo stampa
-let cardsHtml = ``;
+let singleCardHtml = ``;
 
 // funzione che crea il contenuto delle card
 const cardsContent = (name, role, email, img) => {
-  cardsHtml = ` 
-  <div class="card p-0 mx-1">
-    <div class="row g-0">
-      <div class="col-4">
-        <img
-          src="./${img}"
-          class="img-fluid rounded-start"
-          alt="${name}"
-        />
-      </div>
-      
-      <div class="col-8">
-        <div class="card-body">
-          <h5>${name}</h5>
-          <h6>${role}</h6>
-          <a href="mailto:${email}">${email}</a>
+  return (singleCardHtml = ` 
+  <div class="col">
+    <div class="card bg-black text-white p-0">
+      <div class="row g-0">
+        <div class="col-4">
+          <img
+            src="./${img}"
+            class="img-fluid rounded-start"
+            alt="${name}"
+          />
+        </div>
+        
+        <div class="col-8">
+          <div class="card-body">
+            <h5>${name.toUpperCase()}</h5>
+            <h6>${role}</h6>
+            <a href="mailto:${email}">${email}</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>`;
+  </div>`);
+};
+
+// funzione che stampa il contenuto in html
+const stampCardsInHtml = (listOfMembers, containerHtml) => {
+  // variabile contenuto finale
+  let cardsHtml = ``;
+
+  // PER OGNI membro della lista
+  listOfMembers.forEach((currentMember) => {
+    const { name, role, email, img } = currentMember;
+    cardsHtml += cardsContent(name, role, email, img);
+  });
+
+  containerHtml.innerHTML = cardsHtml;
 };
 
 // recupero elementi html
 const cardsContainer = document.getElementById("team-cards-box");
+
+stampCardsInHtml(teamMembers, cardsContainer);
